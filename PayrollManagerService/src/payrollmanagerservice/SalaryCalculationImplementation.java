@@ -4,18 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SalaryCalculationImplementation implements SalaryCalculation{
-	 public Map<Integer, String[]> employeeMap = new HashMap<>();
-	 private Map<Integer, String[]> financialDetails = new HashMap<>();
-	 public String[] getDetails(){
-	  return employeeMap.get(1);
-	 }
+	 
+	 
 	 @Override
 	 public Map<Integer, String[]> getEmployeeDetails() {
-	  return employeeMap;
+	  return Activator.employeeMap;
 	 }
 	 @Override
 	 public Map<Integer, String[]> getEmployeeFinancialDetails() {
-	  return financialDetails;
+	  return Activator.financialDetails;
 	 }
 	 @Override
 	 public double calculateEpf12(float basicSalary) {
@@ -44,7 +41,7 @@ public class SalaryCalculationImplementation implements SalaryCalculation{
 
 	 @Override
 	 public void employeeDetails(int id, String name, String nic, String basicSalary) {
-	  employeeMap.put(
+		 Activator.employeeMap.put(
 	    id, 
 	    new String[] {
 	    name, 
@@ -56,15 +53,14 @@ public class SalaryCalculationImplementation implements SalaryCalculation{
 
 	 @Override
 	 public void employeeFinancialDetails(int id, float loanAmount, float interestRate, int year, int month) {
-	  String name = employeeMap.get(id)[1];
-	  float basic = Float.parseFloat(employeeMap.get(id)[2]);
+	  float basic = Float.parseFloat(Activator.employeeMap.get(id)[2]);
 	  double epf12 = this.calculateEpf12(basic);
 	  double epf8 = this.calculateEpf8(basic);
 	  double etf3 = this.calculateEtf3(basic);
 	  double loanDeductions = this.calculateLoanDeduction(loanAmount, interestRate);
 	  double netSalary = this.calculateNetSalary(basic, (float)epf8, (float)etf3, (float)loanDeductions);
 	  
-	  financialDetails.put(
+	  Activator.financialDetails.put(
 	    id, 
 	    new String[] {
 	    String.valueOf(basic),
